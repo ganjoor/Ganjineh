@@ -1,0 +1,38 @@
+﻿<hc:BlurWindow x:Class="Ganjineh.ImageViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        FontFamily="{StaticResource IRANSans}"
+        mc:Ignorable="d"
+        Name="main"
+        WindowState="Maximized"
+         xmlns:hc="https://handyorg.github.io/handycontrol"
+        Style="{StaticResource WindowWin10}"
+        BorderThickness="1"
+        BorderBrush="#262e2f"
+        CloseButtonForeground="{StaticResource DangerBrush}"
+        NonClientAreaBackground="#262e2f"
+        NonClientAreaForeground="White"
+        OtherButtonHoverBackground="#888580"
+        OtherButtonHoverForeground="White"
+        OtherButtonForeground="White"
+        WindowStartupLocation="CenterScreen"
+        Icon="../icon.ico"
+        Title="اسلایدشو">
+    <hc:TransitioningContentControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <StackPanel HorizontalAlignment="Center" Margin="10" Orientation="Horizontal">
+                    <ToggleButton Name="autoPlay" Content="نمایش خودکار"/>
+                    <Button Click="GoToLoc_Click" Margin="5,0" Content="رفتن به محل تصویر"/>
+                </StackPanel>
+            </StackPanel>
+            <hc:Carousel FlowDirection="LeftToRight" Grid.Row="1" Name="img" Margin="16" IsCenter="True" AutoRun="{Binding ElementName=autoPlay, Path=IsChecked}"/>
+        </Grid>
+    </hc:TransitioningContentControl>
+</hc:BlurWindow>
