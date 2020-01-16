@@ -164,6 +164,10 @@ namespace Ganjineh
             foreach (object item in chkTree.Items)
             {
                 ((CheckTreeSource)item).IsChecked = chkAll.IsChecked.Value;
+                foreach (var subItem in ((CheckTreeSource)item).Children)
+                {
+                    ((CheckTreeSource)subItem).IsChecked = chkAll.IsChecked.Value;
+                }
             }
         }
 
