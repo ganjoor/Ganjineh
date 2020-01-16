@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace Ganjineh
 {
@@ -15,11 +15,11 @@ namespace Ganjineh
             InitializeComponent();
         }
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register(
-           "Source", typeof(BitmapFrame), typeof(Avatar), new PropertyMetadata(default(BitmapFrame)));
+           "Source", typeof(ImageSource), typeof(Avatar), new PropertyMetadata(default(ImageSource)));
 
-        public BitmapFrame Source
+        public ImageSource Source
         {
-            get => (BitmapFrame)GetValue(SourceProperty);
+            get => (ImageSource)GetValue(SourceProperty);
             set => SetValue(SourceProperty, value);
         }
 
@@ -45,7 +45,7 @@ namespace Ganjineh
         {
             ObservableCollection<Arts.ImageData> datas = new ObservableCollection<Arts.ImageData>
             {
-                new Arts.ImageData { ImageSource = Link, Name = DisplayName }
+                new Arts.ImageData { ImageSource = Source, Name = DisplayName, Location = Link }
             };
             ImageViewer.Items = datas;
             new ImageViewer().ShowDialog();

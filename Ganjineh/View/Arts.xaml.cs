@@ -6,8 +6,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Threading;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Ganjineh
 {
@@ -25,7 +27,8 @@ namespace Ganjineh
         public class ImageData
         {
             public string Name { get; set; }
-            public string ImageSource { get; set; }
+            public string Location { get; set; }
+            public ImageSource ImageSource { get; set; }
         }
 
         public ObservableCollection<WriterData> WriterNames { get; } = new ObservableCollection<WriterData>(); // کالکشن مربوط به نام نویسندگان
@@ -92,19 +95,23 @@ namespace Ganjineh
             GetWriterBooks((lstWriter.SelectedItem as WriterData).Name);
         }
 
-        private bool isCanceled = false;
-        private void WriterBooks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void WriterBooks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            await LoadFolder();
+        }
+
+        private bool isCanceled = false;
+
+        public async Task LoadFolder()
+        {
+            Images.Clear();
+            isCanceled = false;
+            int index = 0;
+            lstBooks.IsEnabled = lstWriter.IsEnabled = false;
+            IProgress<int> progress = new Progress<int>(i => { prg.Value = i; });
             WriterData SelectedItem = lstBooks.SelectedItem as WriterData;
             if (SelectedItem != null)
             {
-                lstBooks.IsEnabled = lstWriter.IsEnabled = false;
-                Images.Clear();
-                isCanceled = false;
-                int index = 0;
-                IProgress<int> progress = new Progress<int>(i => { prg.Value = i; });
-
-
                 string[] extensions = { ".jpg", ".jpeg", ".png", ".bmp" };
                 System.Collections.Generic.IEnumerable<string> files = Directory.EnumerateFiles(SelectedItem.Tag, "*.*").Where(s => extensions.Any(ext => ext == Path.GetExtension(s)));
                 foreach (string path in files)
@@ -113,14 +120,36 @@ namespace Ganjineh
                     {
                         index += 1;
                         progress.Report((int)((double)(index) / files.Count() * 100)); // گزارش پیشرفت کار
-                        Dispatcher.Invoke(() =>
+                        Images.Add(new ImageData
                         {
-                            Images.Add(new ImageData { ImageSource = path, Name = Path.GetFileNameWithoutExtension(path) });
-                        }, DispatcherPriority.Background);
+                            Name = Path.GetFileNameWithoutExtension(path),
+                            Location = path,
+                            ImageSource = await LoadImage(path)
+                        });
                     }
                 }
                 Button_Click(null, null);
             }
+
+        }
+        public Task<BitmapImage> LoadImage(string path)
+        {
+            return Task.Run(() =>
+            {
+                BitmapImage bitmap = new BitmapImage();
+
+                using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    bitmap.BeginInit();
+                    bitmap.DecodePixelHeight = 350;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.StreamSource = stream;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+
+                return bitmap;
+            });
         }
         private void SearchWriterNames_OnSearchStarted(object sender, FunctionEventArgs<string> e)
         {

@@ -19,6 +19,7 @@
         OtherButtonForeground="White"
         WindowStartupLocation="CenterScreen"
         Icon="../icon.ico"
+        Loaded="main_Loaded"       
         Title="اسلایدشو">
     <hc:TransitioningContentControl>
         <Grid>
@@ -32,7 +33,9 @@
                     <Button Click="GoToLoc_Click" Margin="5,0" Content="رفتن به محل تصویر"/>
                 </StackPanel>
             </StackPanel>
-            <hc:Carousel FlowDirection="LeftToRight" Grid.Row="1" Name="img" Margin="16" IsCenter="True" AutoRun="{Binding ElementName=autoPlay, Path=IsChecked}"/>
+            <hc:BusyIndicator Grid.Row="1" Name="busyIndicator" OverlayStyle="{StaticResource RectangleCircular}" ProgressBarStyle="{DynamicResource ProgressBarPrimaryStripe}" BusyContent="درحال آماده سازی اسلایدشو...">
+                <hc:Carousel FlowDirection="LeftToRight" Grid.Row="1" Name="img" Margin="16" IsCenter="True" AutoRun="{Binding ElementName=autoPlay, Path=IsChecked}"/>
+            </hc:BusyIndicator>
         </Grid>
     </hc:TransitioningContentControl>
 </hc:BlurWindow>

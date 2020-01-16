@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ganjineh"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             Margin="16"
+             Margin="10"
              Effect="{StaticResource EffectShadow5}" 
              Cursor="Hand"
              mc:Ignorable="d">
     <Button Style="{StaticResource ButtonCustom}" Click="Button_Click">
         <Border Background="{DynamicResource SecondaryRegionBrush}" CornerRadius="10">
-            <Grid Height="300" Width="300">
+            <Grid Height="300" Width="210">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Image Source="{Binding Source,RelativeSource={RelativeSource AncestorType=UserControl}}" Stretch="Uniform" Margin="0,5"/>
-                <TextBlock x:Name="txtDisplay" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" Margin="0,0,0,5" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Text="{Binding DisplayName,RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
+                <TextBlock x:Name="txtDisplay" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" Grid.Row="1" Style="{StaticResource TextBlockDefault}" Text="{Binding DisplayName,RelativeSource={RelativeSource AncestorType=UserControl}}"></TextBlock>
             </Grid>
         </Border>
     </Button>
