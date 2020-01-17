@@ -1,6 +1,9 @@
 ﻿using Ganjineh.Data;
 using HandyControl.Data;
 using HandyControl.Tools;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System;
 using System.Net;
 using System.Windows;
@@ -13,6 +16,10 @@ namespace Ganjineh
         {
             base.OnStartup(e);
             GlobalData.Init();
+
+            AppCenter.Start("e01ac72e-2238-4eea-a010-6192e35ea91a",
+                   typeof(Analytics), typeof(Crashes));
+
             ConfigHelper.Instance.SetLang("fa");
             if (GlobalData.Config.Skin != SkinType.Default)
             {
