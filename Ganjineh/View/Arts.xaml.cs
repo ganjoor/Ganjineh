@@ -1,7 +1,9 @@
 ﻿using Ganjineh.Data;
+using Ganjineh.Model;
 using HandyControl.Controls;
 using HandyControl.Data;
 using HandyControl.Tools.Extension;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -97,10 +99,69 @@ namespace Ganjineh
 
         private async void WriterBooks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            LoadJsonInfo();
             await LoadFolder();
         }
 
         private bool isCanceled = false;
+
+        private void LoadJsonInfo()
+        {
+            WriterData SelectedItem = lstBooks.SelectedItem as WriterData;
+            if (SelectedItem != null)
+            {
+                string PATH = SelectedItem.Tag + @"\Info.json";
+                if (File.Exists(PATH))
+                {
+                    ArtifactModel.RootObject m = JsonConvert.DeserializeObject<ArtifactModel.RootObject>(File.ReadAllText(PATH));
+                    txtDetail.Text = m.description;
+
+                    foreach (ArtifactModel.ArtifactTag item in m.artifactTags)
+                    {
+                        TextBlock txtSubject = new TextBlock();
+                        StackPanel HorizontalStack = new StackPanel();
+                        StackPanel VerticalValueStack = new StackPanel();
+
+                        HorizontalStack.Orientation = Orientation.Horizontal;
+                        HorizontalStack.Margin = new System.Windows.Thickness(5, 0, 5, 0);
+                        txtSubject.Text = item.name;
+                        txtSubject.Margin = new System.Windows.Thickness(10);
+                        txtSubject.VerticalAlignment = System.Windows.VerticalAlignment.Center;
+                        HorizontalStack.Children.Add(txtSubject);
+
+
+                        foreach (ArtifactModel.Value subitem in item.values)
+                        {
+                            if (subitem.valueSupplement.Contains("http"))
+                            {
+                                Button btn = new Button
+                                {
+                                    Content = subitem.value,
+                                    Margin = new System.Windows.Thickness(10, 10, 10, 15)
+                                };
+                                btn.Click += (s, e) => System.Diagnostics.Process.Start(subitem.valueSupplement);
+                                VerticalValueStack.Children.Add(btn);
+                            }
+                            else
+                            {
+                                TextBlock txtValue = new TextBlock
+                                {
+                                    Text = subitem.value,
+                                    Margin = new System.Windows.Thickness(10)
+                                };
+
+                                VerticalValueStack.Children.Add(txtValue);
+                            }
+
+                        }
+                        HorizontalStack.Children.Add(VerticalValueStack);
+
+                        stck.Children.Add(HorizontalStack);
+                    }
+                }
+            }
+
+        }
 
         public async Task LoadFolder()
         {

@@ -58,13 +58,31 @@
                         <Button Content="نمایش بصورت اسلاید" Click="ButtonSlide_Click" Margin="10,15"/>
                     </StackPanel>
                 </StackPanel>
-                <ListBox x:Name="lstContent" Grid.Row="1" ItemContainerStyle="{StaticResource ListBoxItemCustom}" BorderThickness="0" ItemsSource="{Binding Images}" ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <local:Avatar DisplayName="{Binding Name}" Source="{Binding ImageSource}" Link="{Binding Location}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <TabControl Margin="0,0,0,1" Grid.Row="1"  Style="{StaticResource TabControlCapsuleSolid}">
+                    <TabItem Header="تصاویر">
+                        <ListBox x:Name="lstContent" ItemContainerStyle="{StaticResource ListBoxItemCustom}" BorderThickness="0" ItemsSource="{Binding Images}" ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <local:Avatar DisplayName="{Binding Name}" Source="{Binding ImageSource}" Link="{Binding Location}"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </TabItem>
+                    <TabItem Header="جزئیات کتاب">
+                        <TabControl>
+                            <TabItem Header="توضیحات">
+                                <hc:ScrollViewer>
+                                    <TextBlock Margin="10" x:Name="txtDetail" TextWrapping="Wrap"/>
+                                </hc:ScrollViewer>
+                            </TabItem>
+                            <TabItem Header="ویژگی ها">
+                                <hc:ScrollViewer>
+                                    <StackPanel x:Name="stck"/>
+                                </hc:ScrollViewer>
+                            </TabItem>
+                        </TabControl>
+                    </TabItem>
+                </TabControl>
             </Grid>
         </Grid>
     </hc:TransitioningContentControl>
