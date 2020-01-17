@@ -38,15 +38,15 @@
                 <StackPanel Margin="5">
                     <CheckBox FlowDirection="LeftToRight" Checked="chkAll_Checked" Unchecked="chkAll_Checked" x:Name="chkAll" HorizontalAlignment="Left" Content="انتخاب همه آثار"/>
                     <StackPanel Orientation="Horizontal">
-                        <Button Click="btnBrowse_Click" x:Name="btnBrowse" FlowDirection="LeftToRight" Margin="0,25,0,0" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{DynamicResource SaveGeometry}"/>
-                        <hc:TextBox Name="txtBrowse" Width="320" IsReadOnly="True" hc:InfoElement.Necessary="True" hc:InfoElement.Placeholder="آدرس محل ذخیره فایل ها" hc:TitleElement.Title="محل ذخیره"/>
+                        <Button Foreground="{DynamicResource PrimaryTextBrush}" Click="btnBrowse_Click" x:Name="btnBrowse" FlowDirection="LeftToRight" Margin="0,25,0,0" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{DynamicResource SaveGeometry}"/>
+                        <hc:TextBox Foreground="{DynamicResource PrimaryTextBrush}" Name="txtBrowse" Width="320" IsReadOnly="True" hc:InfoElement.Necessary="True" hc:InfoElement.Placeholder="آدرس محل ذخیره فایل ها" hc:TitleElement.Title="محل ذخیره"/>
                     </StackPanel>
                     <ProgressBar x:Name="prgStatus" FlowDirection="LeftToRight" Margin="0,5"/>
                     <ProgressBar x:Name="prg" FlowDirection="LeftToRight" Margin="0,5"/>
                     <ToggleButton IsEnabled="False" Checked="btnDownload_Checked" Unchecked="btnDownload_Unchecked" Name="btnDownload" FlowDirection="LeftToRight" Content="دانلود آثار انتخاب شده" Width="180" Margin="5" Style="{StaticResource ToggleButtonPrimary}"/>
-                    <TextBlock TextWrapping="Wrap" x:Name="txtCurrentBook" Margin="5"/>
-                    <TextBlock TextWrapping="Wrap" x:Name="txtCurrentIndex" Margin="5"/>
-                    <TextBlock TextWrapping="Wrap" x:Name="txtCurrentImageIndex" Margin="5"/>
+                    <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" x:Name="txtCurrentBook" Margin="5"/>
+                    <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" x:Name="txtCurrentIndex" Margin="5"/>
+                    <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" x:Name="txtCurrentImageIndex" Margin="5"/>
 
                 </StackPanel>
             </GroupBox>
