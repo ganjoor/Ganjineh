@@ -104,9 +104,36 @@ namespace Ganjineh
             public string ContributorName { get; set; }
         }
 
+        private void GetSelectedItems()
+        {
+            SelectedItems.Clear();
+            SelectedItemsCount = 0;
+
+            foreach (object item in chkTree.Items)
+            {
+                foreach (CheckTreeSource subitem in ((CheckTreeSource)item).Children)
+                {
+                    if (subitem.IsChecked == true)
+                    {
+                        SelectedItemsCount++;
+                        SelectedItems.Add(new CheckTreeSource { Text = subitem.Text, IsChecked = subitem.IsChecked, CTag = subitem.CTag, Children = subitem.Children, Parent = subitem.Parent });
+                    }
+                    else if (subitem.IsChecked == false)
+                    {
+                        List<CheckTreeSource> toRemove = SelectedItems.Where(x => x.Text == subitem.Text).ToList();
+                        foreach (CheckTreeSource remitem in toRemove)
+                        {
+                            SelectedItemsCount--;
+                            SelectedItems.Remove(remitem);
+                        }
+                    }
+                }
+            }
+        }
 
         private void btnDownload_Checked(object sender, RoutedEventArgs e)
         {
+            GetSelectedItems();
             chkTree.IsEnabled = false;
 
             // تمام ایتم های انتخاب شده را در کالکشن ذخیره میکنیم
@@ -178,27 +205,6 @@ namespace Ganjineh
 
             source.UpdateChildStatus();
             source.UpdateParentStatus();
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-            CheckBox checkBox = (CheckBox)sender;
-            CheckTreeSource source = (CheckTreeSource)checkBox.DataContext;
-
-            if (source.IsChecked.Value)
-            {
-                SelectedItemsCount++;
-                SelectedItems.Add(new CheckTreeSource { Text = source.Text, IsChecked = source.IsChecked, CTag = source.CTag, Children = source.Children, Parent = source.Parent });
-            }
-            else
-            {
-                SelectedItemsCount--;
-                List<CheckTreeSource> toRemove = SelectedItems.Where(x => x.Text == source.Text).ToList();
-                foreach (CheckTreeSource item in toRemove)
-                {
-                    SelectedItems.Remove(item);
-                }
-            }
         }
 
         #region Downloader

@@ -26,7 +26,7 @@
                         <TreeView.ItemTemplate>
                             <HierarchicalDataTemplate DataType = "{x:Type local:CheckTreeSource}" ItemsSource = "{Binding Children}">
                                 <StackPanel Orientation="Horizontal">
-                                    <CheckBox FlowDirection="LeftToRight" Checked="CheckBox_Checked" Unchecked="CheckBox_Checked" Margin="1" IsChecked="{Binding IsChecked}" Click="CheckBox_Click"/>
+                                    <CheckBox FlowDirection="LeftToRight" Margin="1" IsChecked="{Binding IsChecked}" Click="CheckBox_Click"/>
                                     <TextBlock Margin="5,0" Text="{Binding Text}"/>
                                 </StackPanel>
                             </HierarchicalDataTemplate>
