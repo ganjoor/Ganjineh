@@ -41,8 +41,13 @@
                         <Button Foreground="{DynamicResource PrimaryTextBrush}" Click="btnBrowse_Click" x:Name="btnBrowse" FlowDirection="LeftToRight" Margin="0,25,0,0" Style="{StaticResource ButtonIcon}" hc:IconElement.Geometry="{DynamicResource SaveGeometry}"/>
                         <hc:TextBox Foreground="{DynamicResource PrimaryTextBrush}" Name="txtBrowse" Width="320" IsReadOnly="True" hc:InfoElement.Necessary="True" hc:InfoElement.Placeholder="آدرس محل ذخیره فایل ها" hc:TitleElement.Title="محل ذخیره"/>
                     </StackPanel>
-                    <ProgressBar x:Name="prgStatus" FlowDirection="LeftToRight" Margin="0,5"/>
+                    <hc:ComboBox Name="cmbSize" Margin="0,5" SelectedIndex="0" hc:TitleElement.Title="انتخاب سایز تصاویر" hc:InfoElement.Necessary="True" hc:InfoElement.Placeholder="انتخاب سایز تصاویر...">
+                        <ComboBoxItem Tag="orig" Content="اصلی"/>
+                        <ComboBoxItem Tag="norm" Content="نرمال"/>
+                        <ComboBoxItem Tag="thumb" Content="بند انگشتی"/>
+                    </hc:ComboBox>
                     <ProgressBar x:Name="prg" FlowDirection="LeftToRight" Margin="0,5"/>
+                    <ProgressBar x:Name="prgStatus" FlowDirection="LeftToRight" Margin="0,5"/>
                     <ToggleButton IsEnabled="False" Checked="btnDownload_Checked" Unchecked="btnDownload_Unchecked" Name="btnDownload" FlowDirection="LeftToRight" Content="دانلود آثار انتخاب شده" Width="180" Margin="5" Style="{StaticResource ToggleButtonPrimary}"/>
                     <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" x:Name="txtCurrentBook" Margin="5"/>
                     <TextBlock Foreground="{DynamicResource PrimaryTextBrush}" TextWrapping="Wrap" x:Name="txtCurrentIndex" Margin="5"/>

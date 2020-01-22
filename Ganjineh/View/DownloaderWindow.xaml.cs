@@ -1,6 +1,7 @@
 ﻿using Ganjineh.Data;
 using Ganjineh.Model;
 using HandyControl.Controls;
+using HandyControl.Tools;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Ganjineh
         private const string ContributorAPI = "https://ganjgah.ir/api/artifacts/tagbundle/contributor"; // دریافت لیست نویسندگان
         private const string ContributorTagAPI = "https://ganjgah.ir/api/artifacts/tagged/contributor/{0}"; // دریافت لیست کتب نویسندگان
         private const string GetImagesAndInfoAPI = "https://ganjgah.ir/api/artifacts/{0}"; // دریافت اطلاعات کتاب شامل عکس و توضیحات
-        private const string GetImagesAPI = "https://ganjgah.ir/api/images/orig/{0}"; // دریافت عکس کتب
+        private const string GetImagesAPI = "https://ganjgah.ir/api/images/{0}/{1}"; // دریافت عکس کتب ==> https://ganjgah.ir/api/images/orig/d2131589-9080-4195-6cfd-08d766bb7947.jpg
 
         public ObservableCollection<CheckTreeSource> TreeRoot { get; set; } // کالکشن مربوط به لیست نویسندگان و آثار آنها
         public ObservableCollection<CheckTreeSource> SelectedItems = new ObservableCollection<CheckTreeSource>(); // کالکشن مربوط به آیتم های انتخاب شده
@@ -43,6 +44,8 @@ namespace Ganjineh
             //هنگام اجرای برنامه به جهت حجم بالای اطلاعات نیاز هست که پنل بارگزاری نمایش داده شود
             isbusy.IsBusy = true;
             chkAll.IsEnabled = false;
+
+            txtBrowse.Text = GlobalData.Config.Location;
 
             //دریافت اطلاعات جیسون مربوط به نویسندگان و آثار آنها
             string responseContributor = await GetTaskAsync(ContributorAPI);
@@ -133,6 +136,9 @@ namespace Ganjineh
 
         private void btnDownload_Checked(object sender, RoutedEventArgs e)
         {
+            btnDownload.Content = "انصراف";
+            btnDownload.Style = ResourceHelper.GetResource<Style>("ToggleButtonDanger") as Style;
+
             GetSelectedItems();
             chkTree.IsEnabled = false;
 
@@ -179,6 +185,8 @@ namespace Ganjineh
 
         private void btnDownload_Unchecked(object sender, RoutedEventArgs e)
         {
+            btnDownload.Content = "دانلود آثار انتخاب شده";
+            btnDownload.Style = ResourceHelper.GetResource<Style>("ToggleButtonPrimary") as Style;
             // اگر دانلود کنسل شد کالکشن ها باید خالی شوند
             Books.Clear();
             client?.CancelAsync();
@@ -269,7 +277,7 @@ namespace Ganjineh
                             File.WriteAllText(JSON_PATH, json);
                         }
 
-
+                        // گزارش پیشرفت برای بیشتر از 1 مجموعه
                         if (Books.Count > 0)
                         {
                             currentIndex++;
@@ -277,12 +285,21 @@ namespace Ganjineh
                             txtCurrentIndex.Text = $"مجموعه دانلود شده {currentIndex} از {SelectedItemsCount}";
                             txtCurrentBook.Text = $"درحال دانلود کتاب {url.BookName} از {url.ContributorName}";
                         }
+                       
 
                         // دریافت تصاویر مربوط به کتاب
                         foreach (ArtifactModel.Item item in resultContributor.items)
                         {
                             if (btnDownload.IsChecked.Value)
                             {
+                                // گزارش پیشرفت تنها برای 1 مجموعه انتخاب شده
+                                if (Books.Count == 0)
+                                {
+                                    progress.Report((int)((double)(currentImageIndex) / resultContributor.items.Count * 100)); // گزارش پیشرفت کار
+                                    txtCurrentIndex.Text = string.Empty;
+                                    txtCurrentBook.Text = $"درحال دانلود کتاب {url.BookName} از {url.ContributorName}";
+                                }
+
                                 txtCurrentImageIndex.Text = $"تصویر دانلود شده {currentImageIndex++} از {resultContributor.items.Count}";
 
                                 // و اگر فایل قبلا دانلود نشده بود - موجود نباشد
@@ -293,7 +310,7 @@ namespace Ganjineh
                                     {
                                         client.DownloadProgressChanged += Client_DownloadProgressChanged;
                                         client.DownloadFileCompleted += Client_DownloadFileCompleted;
-                                        await client.DownloadFileTaskAsync(string.Format(GetImagesAPI, item.images[0].id + Path.GetExtension(item.images[0].originalFileName)), PATH + $@"\{item.images[0].originalFileName}");
+                                        await client.DownloadFileTaskAsync(string.Format(GetImagesAPI, ((ComboBoxItem)cmbSize.SelectedItem).Tag.ToString(), item.images[0].id + Path.GetExtension(item.images[0].originalFileName)), PATH + $@"\{item.images[0].originalFileName}");
                                     }
                                 }
                             }

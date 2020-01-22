@@ -14,7 +14,7 @@
         ShowTitle="True"
         Height="450"
         Icon="icon.ico"
-        Width="800">
+        Width="900">
     <hc:Window.NonClientAreaContent>
         <Grid>
             <Grid.ColumnDefinitions>
