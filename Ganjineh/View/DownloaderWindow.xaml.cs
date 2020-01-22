@@ -140,7 +140,7 @@ namespace Ganjineh
             btnDownload.Style = ResourceHelper.GetResource<Style>("ToggleButtonDanger") as Style;
 
             GetSelectedItems();
-            chkTree.IsEnabled = false;
+            chkAll.IsEnabled = chkTree.IsEnabled = false;
 
             // تمام ایتم های انتخاب شده را در کالکشن ذخیره میکنیم
             // همینطور چک میکنیم که گزینه تکراری وجود نداشته باشه
@@ -191,7 +191,8 @@ namespace Ganjineh
             Books.Clear();
             client?.CancelAsync();
             prgStatus.Value = prg.Value = 0;
-            chkTree.IsEnabled = true;
+            chkAll.IsEnabled = chkTree.IsEnabled = true;
+            
         }
 
         private void chkAll_Checked(object sender, RoutedEventArgs e)
