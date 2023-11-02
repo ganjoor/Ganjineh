@@ -75,7 +75,7 @@ namespace Ganjineh
             {
                 WriterBooks.Clear();
                 busyIndicatorBooks.IsBusy = true;
-                foreach (string dir in System.IO.Directory.EnumerateDirectories(GlobalData.Config.Location + $"{WriterName}"))
+                foreach (string dir in System.IO.Directory.EnumerateDirectories(Path.Combine(GlobalData.Config.Location, $"{WriterName}")))
                 {
                     WriterBooks.Add(new WriterData
                     {
