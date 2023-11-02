@@ -116,6 +116,7 @@ namespace Ganjineh.Model
             public string storedFileName { get; set; }
             public DateTime dataTime { get; set; }
             public DateTime lastModified { get; set; }
+            public string externalNormalSizeImageUrl { get; set; }
         }
 
         public class Item
