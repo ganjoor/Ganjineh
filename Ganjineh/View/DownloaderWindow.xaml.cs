@@ -164,6 +164,11 @@ namespace Ganjineh
                     }
                 }
             }
+            if(!Books.Any())
+            {
+                Growl.ErrorGlobal("مورد دریافت نشده‌ای انتخاب نشده.");
+                return;
+            }
             DownloadFile();
         }
 
@@ -334,7 +339,7 @@ namespace Ganjineh
                     }
                     catch (Exception exp)
                     {
-                        Growl.InfoGlobal($"این خطا رخ داد: {exp}");
+                        Growl.ErrorGlobal($"این خطا رخ داد: {exp}");
                         prgStatus.Value = prg.Value = 0;
                         chkTree.IsEnabled = true;
                         client.Dispose();
