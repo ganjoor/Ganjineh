@@ -17,7 +17,7 @@
                 <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button FlowDirection="LeftToRight" Content="سورس برنامه" Command="hc:ControlCommands.OpenLink" CommandParameter="http://github.com/ghost1372/Ganjineh" Margin="10,16,0,0" HorizontalAlignment="Center" hc:IconElement.Geometry="{DynamicResource GithubGeometry}"/>
                     <Button FlowDirection="LeftToRight" Content="موزه گنجور" Command="hc:ControlCommands.OpenLink" CommandParameter="https://museum.ganjoor.net" Margin="10,16,0,0" HorizontalAlignment="Center" hc:IconElement.Geometry="{DynamicResource StarGeometry}"/>
-                    <Button FlowDirection="LeftToRight" Content="گنجگاه" Command="hc:ControlCommands.OpenLink" CommandParameter="https://ganjgah.ir/index.html" Margin="10,16,0,0" HorizontalAlignment="Center" hc:IconElement.Geometry="{DynamicResource APIGeometry}"/>
+                    <Button FlowDirection="LeftToRight" Content="گنجگاه" Command="hc:ControlCommands.OpenLink" CommandParameter="https://api.ganjoor.net/index.html" Margin="10,16,0,0" HorizontalAlignment="Center" hc:IconElement.Geometry="{DynamicResource APIGeometry}"/>
 
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,16,0,0">

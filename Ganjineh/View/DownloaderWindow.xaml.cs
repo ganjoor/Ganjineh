@@ -21,10 +21,10 @@ namespace Ganjineh
     /// </summary>
     public partial class DownloaderWindow
     {
-        private const string ContributorAPI = "https://ganjgah.ir/api/artifacts/tagbundle/contributor"; // دریافت لیست نویسندگان
-        private const string ContributorTagAPI = "https://ganjgah.ir/api/artifacts/tagged/contributor/{0}"; // دریافت لیست کتب نویسندگان
-        private const string GetImagesAndInfoAPI = "https://ganjgah.ir/api/artifacts/{0}"; // دریافت اطلاعات کتاب شامل عکس و توضیحات
-        private const string GetImagesAPI = "https://ganjgah.ir/api/images/{0}/{1}"; // دریافت عکس کتب ==> https://ganjgah.ir/api/images/orig/d2131589-9080-4195-6cfd-08d766bb7947.jpg
+        private const string ContributorAPI = "https://api.ganjoor.net/api/artifacts/tagbundle/contributor"; // دریافت لیست نویسندگان
+        private const string ContributorTagAPI = "https://api.ganjoor.net/api/artifacts/tagged/contributor/{0}"; // دریافت لیست کتب نویسندگان
+        private const string GetImagesAndInfoAPI = "https://api.ganjoor.net/api/artifacts/{0}"; // دریافت اطلاعات کتاب شامل عکس و توضیحات
+        private const string GetImagesAPI = "https://api.ganjoor.net/api/images/{0}/{1}"; // دریافت عکس کتب ==> https://api.ganjoor.net/api/images/orig/d2131589-9080-4195-6cfd-08d766bb7947.jpg
 
         public ObservableCollection<CheckTreeSource> TreeRoot { get; set; } // کالکشن مربوط به لیست نویسندگان و آثار آنها
         public ObservableCollection<CheckTreeSource> SelectedItems = new ObservableCollection<CheckTreeSource>(); // کالکشن مربوط به آیتم های انتخاب شده
